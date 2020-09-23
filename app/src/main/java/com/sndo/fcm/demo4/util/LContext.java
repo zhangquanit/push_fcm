@@ -1,9 +1,8 @@
-package com.android.util;
+package com.sndo.fcm.demo4.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.android.util.log.LogUtil;
 
 /**
  * @author 张全
@@ -33,7 +32,6 @@ public class LContext {
     public static void init(Context ctx, boolean debug) {
         LContext.ctx = ctx;
         LContext.isDebug = debug;
-        LogUtil.openLog(debug);
         DisplayMetrics dm = ctx.getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;

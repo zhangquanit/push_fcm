@@ -1,20 +1,17 @@
-package com.android.util.ext;
+package com.sndo.fcm.demo4.util;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.util.LContext;
-import com.android.util.os.DeviceUtil;
+import com.sndo.fcm.demo4.R;
 
 import java.lang.reflect.Field;
-
-import common.util.R;
 
 public class ToastUtil {
     private static Toast mToast;
@@ -79,8 +76,8 @@ public class ToastUtil {
             Context context = LContext.getContext();
 //			mToast = Toast.makeText(LContext.getContext(), text,
 //					Toast.LENGTH_SHORT);
-            int d14 = DeviceUtil.dip2px(context, 14);
-            int d8 = DeviceUtil.dip2px(context, 8);
+            int d14 = dip2px(context, 14);
+            int d8 = dip2px(context, 8);
             mToast = new Toast(context);
             TextView textView = new TextView(context);
             textView.setText(text);
@@ -111,8 +108,8 @@ public class ToastUtil {
             Context context = LContext.getContext();
 //            mToast = Toast.makeText(context, text,
 //					Toast.LENGTH_LONG);
-            int d14 = DeviceUtil.dip2px(context, 14);
-            int d8 = DeviceUtil.dip2px(context, 8);
+            int d14 = dip2px(context, 14);
+            int d8 = dip2px(context, 8);
             mToast = new Toast(context);
             TextView textView = new TextView(context);
             textView.setText(text);
@@ -133,5 +130,10 @@ public class ToastUtil {
             mToast.cancel();
             mToast = null;
         }
+    }
+
+    public static int dip2px(Context context, float dip) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip,
+                context.getResources().getDisplayMetrics());
     }
 }

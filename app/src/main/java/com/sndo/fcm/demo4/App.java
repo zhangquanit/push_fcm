@@ -2,7 +2,7 @@ package com.sndo.fcm.demo4;
 
 import android.app.Application;
 
-import com.android.util.LContext;
+import com.sndo.fcm.demo4.util.LContext;
 
 public class App extends Application {
     @Override

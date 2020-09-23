@@ -1,4 +1,3 @@
-include ':librarys:CommonUtil'
-include ':librarys:Logger'
+
 include ':app'
 rootProject.name = "fcm_demo"
