@@ -1,0 +1,149 @@
+
+
+-------------------------------------集成步骤
+一、在项目中集成FCM
+1、在项目根目录下的build.gradle中添加
+classpath 'com.google.gms:google-services:4.3.3'
+
+2、在app的build.gradle添加依赖
+implementation 'com.google.firebase:firebase-iid:20.2.4'
+implementation 'com.google.firebase:firebase-messaging:20.2.4'
+以及插件依赖
+apply plugin: 'com.google.gms.google-services'
+
+3、继承FirebaseMessagingService，重写onMessageReceived
+
+4、在manifest.xml中添加
+	<service
+		android:name=".MyFirebaseMessagingService"
+		android:enabled="true"
+		android:exported="true">
+		<intent-filter>
+			<action android:name="com.google.firebase.MESSAGING_EVENT" />
+		</intent-filter>
+	</service>
+
+	<meta-data
+		android:name="com.google.firebase.messaging.default_notification_icon"
+		android:resource="@mipmap/ic_launcher" />
+	<meta-data
+		android:name="com.google.firebase.messaging.default_notification_color"
+		android:resource="@color/c_131413" />
+
+	<meta-data
+		android:name="com.google.firebase.messaging.default_notification_channel_id"
+		android:value="@string/default_notification_channel_id" />
+
+5、在FireBase平台注册应用
+填写包名、SHA1值等
+下载google-services.json  放到app目录下
+
+6、测试消息
+控制台发送通知消息
+https://console.firebase.google.com/project/chainprovider/notification/compose
+http发送测试消息
+https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send?authuser=0
+
+备注：android需要安装Google Play 服务
+
+
+
+-------------------------------------相关资料
+账号
+servicesupplier99@gmail.com
+Tmm200511
+
+官方demo地址
+https://github.com/firebase/quickstart-android/tree/master/messaging
+文档地址：
+https://firebase.google.com/docs/cloud-messaging
+
+
+一、消息类型
+https://firebase.google.com/docs/cloud-messaging/concept-options?authuser=0
+消息格式：https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=0#Notification
+使用 FCM，您可以向客户端发送两种类型的消息：
+1、通知消息：
+
+#只包含通知消息
+{
+  "message":{
+    "token":"cZoYv4HiRXKicU1f_myw35:APA91bHTNcgR5CZGGZm1HFLLG8gYWQeuOKpGB0xU01zCdeAUNKCto7nKN_uw3sAjYexna3myhCHDyhGsL3n-u0XOD6-inw_vlO_LniUPCqhuhCVBZGvXeCl-qlUcTi8vjDPhtaY7iVE4",
+    "notification":{
+      "title":"通知标题",
+      "body":"通知内容"
+    }
+  }
+}
+
+## 包含数据载荷的通知消息
+{
+  "message":{
+    "token":"cZoYv4HiRXKicU1f_myw35:APA91bHTNcgR5CZGGZm1HFLLG8gYWQeuOKpGB0xU01zCdeAUNKCto7nKN_uw3sAjYexna3myhCHDyhGsL3n-u0XOD6-inw_vlO_LniUPCqhuhCVBZGvXeCl-qlUcTi8vjDPhtaY7iVE4",
+    "notification":{
+      "title":"通知标题",
+      "body":"通知内容"
+    },
+    "data" : {
+      "key1" : "value1",
+      "key2" : "value2"
+    }
+  }
+}
+
+前台：消息由回调函数onMessageReceived处理。
+后台：SDK会自动发送通知，用户点击通知后，在Activity中获取data内容，不会回调onMessageReceived。
+
+2、数据消息：
+由客户端应用处理，只包含data。
+如果您需要在自己的客户端应用处理消息，可使用数据消息。
+{
+  "message":{
+    "token":"cZoYv4HiRXKicU1f_myw35:APA91bHTNcgR5CZGGZm1HFLLG8gYWQeuOKpGB0xU01zCdeAUNKCto7nKN_uw3sAjYexna3myhCHDyhGsL3n-u0XOD6-inw_vlO_LniUPCqhuhCVBZGvXeCl-qlUcTi8vjDPhtaY7iVE4",
+    "data":{
+      "key1" : "vaue1",
+      "key2" : "value2"
+    }
+  }
+}
+不管在前台还是后台，客户端应用都会在回调函数onMessageReceived中收到数据载荷。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

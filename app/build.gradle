@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+def config = rootProject.ext
+android {
+
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+
+        applicationId config.app.applicationId
+        versionCode config.app.versionCode
+        versionName config.app.versionName
+
+        ndk {
+            // 设置支持的 SO 库构架
+            abiFilters 'armeabi'//, 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    }
+
+
+    //----------------------签名配置----------------------
+    signingConfigs {
+        debug {
+            //为了方便测试分享或第三方登录  使用正式签名
+            storeFile file('../buildsystem/keystore.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('../buildsystem/keystore.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix ""
+            minifyEnabled false
+            shrinkResources false
+            manifestPlaceholders = [DEBUGABLE: true]
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            shrinkResources false
+            manifestPlaceholders = [DEBUGABLE: false]
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], exclude: ['android-support*.jar'], dir: 'libs')
+    implementation project(':librarys:CommonUtil')
+    implementation project(':librarys:Logger')
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+
+    //fmc依赖
+    implementation 'com.google.firebase:firebase-iid:20.2.4'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+
+    // For an optimal experience using FCM, add the Firebase SDK
+    // for Google Analytics. This is recommended, but not required.
+//    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+}
+
+apply plugin: 'com.google.gms.google-services'

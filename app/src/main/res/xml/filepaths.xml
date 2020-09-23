@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding= "utf-8"?>
+<paths>
+    <files-path
+        name="apk"
+        path="files/" />
+
+    <external-path
+        name="takephoto"
+        path="Android/" />
+
+    <external-path
+        name="downloadApk"
+        path="download/" />
+
+    <external-path
+        name="xlt"
+        path="./" />
+
+    <external-path
+        name="external_storage_root"
+        path="." />
+</paths>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">fcm_demo4</string>
+    <string name="default_notification_channel_id" translatable="false">bcp_default_channel</string>
+</resources>
